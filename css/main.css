@@ -1,0 +1,220 @@
+:root {
+  /* Background colors */
+  --bg-primary-color: #0f0f0f;
+  --bg-secondary-color: #008080;
+  --bg-third-color: #222;
+  /* Text colors */
+  --text-primary-color: #f0f0f0;
+  /* Text sizes */
+  --text-size-xs: 12px;
+  --text-size-sm: 14px;
+  --text-size-md: 16px;
+  --text-size-lg: 20px;
+  --text-size-xl: 24px;
+  --text-size-2xl: 32px;
+  --text-size-3xl: 48px;
+  /* Border colors */
+  --border-primary-color: #2f2f2f;
+  --border-snake-color: #222;
+  /* Border radius sizes */
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-snake: 4px;
+  /* Padding sizes */
+  --space-xs: 12px;
+  --space-sm: 14px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  /* Snake color */
+  --snake-color: #00e676;
+  /* Snake food color */
+  --snake-food-color: #ff1744;
+  /* Backdrop filter blur unit*/
+  --blur-unit: 2px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: var(--text-size-md);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-primary-color);
+  color: var(--text-primary-color);
+}
+
+html,
+body,
+main {
+  height: 100%;
+}
+
+body {
+  position: relative;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-area {
+  max-width: 1024px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+}
+.game-area .stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  background-color: var(--bg-secondary-color);
+  padding: var(--space-md) var(--space-xl);
+}
+.game-area .stats .stat {
+  font-size: clamp(var(--text-size-md), 2vw, var(--text-size-lg));
+  font-weight: 500;
+}
+.game-area .game-board {
+  flex-grow: 1;
+  border: 2px solid var(--border-primary-color);
+  border-radius: var(--border-radius-sm);
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  background-color: var(--bg-third-color);
+}
+.game-area .game-board .cell {
+  border: 2px solid transparent;
+}
+.game-area .game-board .cell.snake {
+  background: radial-gradient(circle at 30% 30%, var(--snake-color), #005a21 60%), radial-gradient(circle at 70% 70%, #009f3a, var(--snake-color) 60%);
+  background-size: 12px 12px;
+  border-color: var(--border-snake-color);
+  border-radius: var(--border-radius-snake);
+}
+.game-area .game-board .cell.snake.head.up {
+  clip-path: polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%);
+}
+.game-area .game-board .cell.snake.head.down {
+  clip-path: polygon(20% 0%, 80% 0%, 100% 60%, 50% 100%, 0% 60%);
+}
+.game-area .game-board .cell.snake.head.left {
+  clip-path: polygon(0% 50%, 40% 0%, 100% 20%, 100% 80%, 40% 100%);
+}
+.game-area .game-board .cell.snake.head.right {
+  clip-path: polygon(60% 0%, 100% 50%, 60% 100%, 0% 80%, 0% 20%);
+}
+.game-area .game-board .cell.food {
+  background-color: var(--snake-food-color);
+  border-radius: 50%;
+  animation: food 500ms ease-in-out infinite alternate;
+  position: relative;
+}
+@keyframes food {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+.game-area .controller-keys {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+}
+.game-area .controller-keys .controller-key {
+  width: 50px;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--text-size-xl);
+  cursor: pointer;
+}
+.game-area .controller-keys .controller-key:active {
+  transform: scale(0.9);
+}
+.game-area .controller-keys .controller-key.up {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.game-area .controller-keys .controller-key.down {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.game-area .controller-keys .controller-key.left {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.game-area .controller-keys .controller-key.right {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(var(--blur-unit));
+  color: var(--text-primary-color);
+  font-size: var(--text-size-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal.hide {
+  display: none;
+}
+.modal .start-game,
+.modal .restart-game {
+  text-align: center;
+}
+.modal .start-game.hide,
+.modal .restart-game.hide {
+  display: none;
+}
+.modal .start-game h3,
+.modal .restart-game h3 {
+  white-space: nowrap;
+  font-size: clamp(var(--text-size-md) + 4px, 3vw, var(--text-size-2xl));
+  padding: var(--space-xs);
+}
+.modal .start-game button,
+.modal .restart-game button {
+  margin: 0 auto;
+  font-size: clamp(var(--text-size-md) - 1px, 2vw, var(--text-size-lg) - 2px);
+  font-weight: bold;
+  padding: 0.65em 0.75em;
+  cursor: pointer;
+}
+.modal .start-game button:active,
+.modal .restart-game button:active {
+  transform: scale(0.9);
+}/*# sourceMappingURL=main.css.map */
