@@ -144,7 +144,7 @@ function gameLoop() {
     renderSnakeOnScreen();
 
     keyPressPaused = false;
-  }, 200);
+  }, 250);
 }
 
 function checkCollision() {
