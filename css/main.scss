@@ -77,8 +77,6 @@ main {
       border-radius: var(--border-radius-snake);
     }
 
-    .cell.snake.head {}
-
     .cell.snake.head.up {
       clip-path: polygon(50% 0%,
           100% 40%,
